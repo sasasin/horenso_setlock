@@ -1,0 +1,9 @@
+---
+slack_endpoint: ''
+slack_channel: '#general'
+
+slack_reporter_url: https://gist.githubusercontent.com/acidlemon/f8faacd20e575fff05cf67a254ab6bc7/raw/a91b49b9a934180d4196382c515313169ef3a5cc/slack_reporter.pl
+
+horenso_url: https://github.com/Songmu/horenso/releases/download/v0.0.2/horenso_linux_amd64.tar.gz
+
+setlock_url: https://github.com/moznion/go-setlock/releases/download/v1.3.0/setlock_linux_amd64.tar.gz

@@ -1,0 +1,46 @@
+---
+- name: install dependent libs
+  yum: name=perl-CPAN state=present
+
+- name: install dependent libs
+  yum: name={{ item }} state=present
+  with_items:
+    - perl-JSON-PP
+  when: ansible_distribution == "Amazon"
+
+- name: install dependent libs
+  shell: cpan "{{ item }}"
+  with_items:
+    - JSON::PP
+  when: ansible_distribution != "Amazon"
+
+- name: install
+  get_url: url={{ slack_reporter_url }} dest=/bin/slack_reporter.pl mode=755 force=True
+
+- name: get horenso package
+  get_url: url={{ horenso_url }} dest=/tmp/horenso_linux_amd64.tar.gz force=True
+
+- name: install horenso
+  shell: |
+    tar xzf /tmp/horenso_linux_amd64.tar.gz
+    mv /tmp/horenso_linux_amd64/horenso /bin/horenso
+    rm -rf /tmp/horenso_linux_amd64*
+  args:
+    chdir: /tmp
+
+- name: get setlock package
+  get_url: url={{ setlock_url }} dest=/tmp/setlock_linux_amd64.tar.gz force=True
+
+- name: install horenso
+  shell: |
+    tar xzf /tmp/setlock_linux_amd64.tar.gz
+    mv /tmp/setlock_linux_amd64/horenso /bin/horenso
+    rm -rf /tmp/setlock_linux_amd64*
+  args:
+    chdir: /tmp
+
+- name: install wrapper scripts
+  template: src={{ item }} dest=/bin/{{ item }} mode=755
+  with_items:
+    - h.sh
+    - hl.sh
